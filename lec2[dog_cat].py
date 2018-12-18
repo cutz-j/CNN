@@ -69,7 +69,37 @@ simple_cnn_model.fit_generator(
         steps_per_epoch=epoch_steps,
         epochs=epochs,
         validation_data=test_images,
-        validation_steps=test_steps)
+        validation_step=test_steps)
+
+## dataset augmentation ##
+generator_train = tf.keras.preprocessing.image.ImageDataGenerator(
+        rescale=1. / 255, horizontal_flip = True,
+        zoom_range=0.3, shear_range=0.3,)
+
+generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1. / 255)
+model = tf.keras.applications.VGG16(include_top=False)
+train_images = generator.flow_from_directory(
+        train_dir, batch_size=batch_size, target_size=(image_width, image_height),
+        class_mode=None, shuffle=False)
+train_bottleneck_features = model.predict_generator(train_images, epoch_steps)
+
+
+## 여러 레이어 미세 조정 ##
+top_model_Weights_path = "fc_model.h5"
+model = tf.keras.applications.VGG16(include_top=False)    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
