@@ -1,6 +1,11 @@
 import cv2
 
-cap = cv2.VideoCapture("d:/realsense/20190430_233138.bag")
+
+file_open = open("d:/realsense/20190430_233138.bag", "r")
+bag = file_open.read()
+
+
+cap = cv2.VideoCapture(bag)
 
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 out = cv2.VideoWriter('d:/realsense/output.avi', fourcc, 30.0, (640,480))
